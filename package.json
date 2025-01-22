@@ -1,5 +1,5 @@
 {
-  "name": "GoGroceries",
+  "name": "go_groceries",
   "private": true,
   "scripts": {
     "build": "turbo build",
