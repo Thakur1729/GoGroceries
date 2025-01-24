@@ -14,8 +14,111 @@ datasource db {
 }
 
 model User {
-  id       Int    @unique @default(autoincrement())
-  name     String
-  email    String
-  password String
+  id          Int       @id @default(autoincrement())
+  name        String
+  phoneNumber String    @unique // Ensures phone numbers are unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  address     Address[]
+  orders      Order[]
+  role        UserRole? @default(USER)
+  otp         Int
+  isVerified  Boolean   @default(false)
+  cart        Cart? // One-to-one relationship with Cart
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  DELIVERY_PARTNER
+}
+
+model Address {
+  id          Int         @id @default(autoincrement())
+  city        String
+  state       String
+  street      String
+  Landmark    String?
+  postalCode  Int
+  isDefault   Boolean     @default(false)
+  addressType AddressType @default(HOME)
+  user        User        @relation(fields: [userid], references: [id])
+  userid      Int         @unique
+  Order       Order[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum AddressType {
+  WORKPLACE
+  HOME
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  address   Address     @relation(fields: [addressid], references: [id])
+  addressid Int         @unique
+  user      User        @relation(fields: [userid], references: [id])
+  userid    Int         @unique
+  status    OrderStatus @default(PROCESSING)
+  items     OrderItem[]
+  totalAmount Float
+  PaymentStatus PaymentStatus @default(PENDING)
+  PaymentMethod PaymentMethod
+  //todo:: add which delivery partner is delivering goods.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PROCESSING
+  PENDING
+  PLACED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem{
+ id Int @id @default(autoincrement())
+ order Order @relation(fields: [orderid], references: [id])
+ orderid Int @unique
+ product Product @relation(fields: [porductId], references: [id])
+ porductId Int @unique
+ quantity Int
+ price Float
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+}
+
+//Todo :: implement payment method tables. 
+
+model Cart {
+  id     Int        @id @default(autoincrement())
+  user   User       @relation(fields: [userId], references: [id])
+  userId Int        @unique // Ensures one user can only have one cart
+  items  CartItem[] // one-to-many relationship with CartItem
+}
+
+model Product {
+  id              Int       @id @default(autoincrement())
+  prodTitle       String
+  prodDescription String
+  price           Int
+  image           String
+  stock           Int       @default(0)
+  CartItem        CartItem? @relation(fields: [cartItemId], references: [id])
+  cartItemId      Int?
+}
+
+model CartItem {
+  id      Int       @id @default(autoincrement())
+  cart    Cart      @relation(fields: [cartId], references: [id])
+  cartId  Int
+  product Product[]
+}
+
+model Category {
+  catagory_id Int @unique
 }
