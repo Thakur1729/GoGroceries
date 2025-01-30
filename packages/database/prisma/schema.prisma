@@ -55,9 +55,9 @@ enum AddressType {
 }
 
 model Category {
-  id Int @unique
+  id Int @id @default(autoincrement())
   name String @unique
-  image String
+  image String?
   products Product[] //one-to-many relationship with products 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -66,10 +66,11 @@ model Category {
 model Product {
   id              Int       @id @default(autoincrement())
   prodName       String
-  prodDescription String
+  prodDescription String?
   price           Int  //discounted price
   mrp             Float
-  image           String
+  //Todo:: there might be multiple images for porduct ✅
+  image           ProductImages[]
   stock           Int       @default(0)
   unit            String //e.g kg, g, pieces, l or ml etc.
   category Category @relation(fields: [categoryId], references: [id])
@@ -80,18 +81,29 @@ model Product {
   updatedAt DateTime @updatedAt
   //TODO :: Implement favourite table
   // FavouriteItem FavoriteItem[]
+}
 
-  // non relevant just hit and trial
-  // CartItem        CartItem? @relation(fields: [cartItemId], references: [id]) // cartItem id is foreign key as cartItemId in Porducts table
-  // cartItemId      Int?
+// keeping all the images of products here
+model ProductImages {
+  id Int @id @default(autoincrement())
+  product Product @relation(fields: [productId], references: [id])
+  productId Int
+  imageLink String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
 }
 
 model Cart {
   id     Int        @id @default(autoincrement())
-  user   User       @relation(fields: [userId], references: [id])
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade) //added cascade to delete cart when user is deleted
   userId Int        @unique // Ensures one user can only have one cart
-  items  CartItem[] // one-to-many relationship with CartItem
+  items  CartItem[]
+
+  @@index([userId]) //for better performance
 }
+
 
 model CartItem {
   id      Int       @id @default(autoincrement())
@@ -113,11 +125,22 @@ model Order {
   status    OrderStatus @default(PROCESSING)
   items     OrderItem[]
   totalAmount Float
-  // PaymentStatus PaymentStatus @default(PENDING)
-  // PaymentMethod PaymentMethod
+  PaymentStatus PaymentStatus @default(PENDING)
+  PaymentMethod PaymentMethod
   //todo:: add which delivery partner is delivering goods.
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  UPI
+}
+
+enum PaymentStatus {
+ PENDING
+ PROCESSING
+ CONFIRM
 }
 
 enum OrderStatus {
@@ -141,6 +164,4 @@ model OrderItem{
  createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt
 }
-
-//Todo :: implement payment method tables. 
 
