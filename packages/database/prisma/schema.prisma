@@ -73,8 +73,8 @@ model Product {
   image           ProductImages[]
   stock           Int       @default(0)
   unit            String //e.g kg, g, pieces, l or ml etc.
-  category Category @relation(fields: [categoryId], references: [id])
-  categoryId Int @unique
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int 
   CartItem CartItem[]
   OrderItem OrderItem[]
   createdAt DateTime @default(now())
@@ -86,9 +86,10 @@ model Product {
 // keeping all the images of products here
 model ProductImages {
   id Int @id @default(autoincrement())
-  product Product @relation(fields: [productId], references: [id])
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade) 
   productId Int
-  imageLink String @unique
+  //todo:: added image link should be differen currently changing for seeding purpose only. 
+  imageLink String 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
