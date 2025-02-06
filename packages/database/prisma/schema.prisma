@@ -20,7 +20,7 @@ model User {
   address     Address[] 
   orders      Order[]
   role        UserRole? @default(USER)
-  otp         Int
+  otp         String?
   isVerified  Boolean   @default(false)
   cart        Cart? // One-to-one relationship with Cart
   createdAt   DateTime  @default(now())
