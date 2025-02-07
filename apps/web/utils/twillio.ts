@@ -15,7 +15,7 @@ export async function createMessage(body: string, to: string) {
             from: process.env.TWILIO_PHONE_NUMBER,
             to: `+91${to}`,
         });
-
+        console.log(message.toJSON())
         // Twilio returns success with message.sid even if there are errors
         // Check for specific error conditions
         if (message.errorCode) {
