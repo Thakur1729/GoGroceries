@@ -11,6 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.5",
     "authenticator": "^1.1.5",
     "next": "^15.1.0",
     "react": "^19.0.0",
@@ -21,12 +22,14 @@
     "@repo/common": "*",
     "@repo/db": "*",
     "@repo/eslint-config": "*",
+    "@repo/tailwind-config": "*",
     "@repo/typescript-config": "*",
     "@repo/ui": "*",
+    "@types/authenticator": "^1.1.4",
     "@types/node": "^20",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
-    "@types/authenticator": "^1.1.4",
+    "tailwindcss": "^4.0.5",
     "typescript": "5.5.4"
   }
 }
