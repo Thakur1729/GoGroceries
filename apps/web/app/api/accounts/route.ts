@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     });
 
     try {
-      await createMessage("Here is your otp for GoGroceries", pnumber);
+      await createMessage(`Here is your otp for GoGroceries ${totp}`, pnumber);
       
       const response = NextResponse.json(
         { message: "OTP sent successfully" },
