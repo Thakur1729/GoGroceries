@@ -32,6 +32,7 @@ function Header() {
 			document.body.style.backgroundColor = '#4A4A4A';
 			document.body.style.overflow = 'hidden';
 		} else {
+			document.body.style.backgroundColor = '';
 			document.body.style.overflow = 'auto';
 		}
 	}, [isLogInOpen, isCartOpen]);
