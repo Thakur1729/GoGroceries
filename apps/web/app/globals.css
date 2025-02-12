@@ -1,7 +1,15 @@
 @import 'tailwindcss';
 
-* {
-	margin: 0;
-	padding: 0;
+@theme {
+	--color-green: #0c831f;
+}
+
+:root {
 	box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
 }
