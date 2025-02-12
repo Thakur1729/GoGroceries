@@ -10,7 +10,7 @@
     /*to add paths you need to add baseURL */
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./"],
+      "@/*": ["./*"],
       "@utils/*": ["./utils/*"],
       // "@styles/*": ["styles/*"]
     }
