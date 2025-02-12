@@ -4,7 +4,9 @@ const config = {
 	theme: {
 		extend: {
 			colors: {
-				primary: '#FF0000',
+				// primary: '#FF0000',
+				primary: '#FFF00',
+				green: '#0C831F',
 			},
 		},
 	},
