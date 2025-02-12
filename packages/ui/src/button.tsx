@@ -1,20 +1,15 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 interface ButtonProps {
-  children: ReactNode;
-  className?: string;
-  appName: string;
+	// children: ReactNode;
+	content: string;
+	// onClick: () => void;
 }
 
-export const Button = ({ children, className, appName }: ButtonProps) => {
-  return (
-    <button
-      className={className}
-      onClick={() => alert(`Hello from your ${appName} app!`)}
-    >
-      {children}
-    </button>
-  );
+// Removed child prop delibratly
+export const Button = ({ content }: ButtonProps) => {
+	// export const Button = ({ children, content, onClick }: ButtonProps) => {
+	return <button className='bg-transparent border-black'>{content}</button>;
 };
