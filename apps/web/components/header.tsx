@@ -1,6 +1,6 @@
 'use client';
 // import { Button } from '@repo/ui/button';
-import { LoginButton } from '@/components/loginButton';
+import { LoginButton } from '@/components/validationPage';
 import { useEffect } from 'react';
 import React from 'react';
 

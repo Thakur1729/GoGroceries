@@ -9,9 +9,11 @@ function OTPForm() {
 				placeholder='OTP'
 				required
 			/>
-			<button className='bg-green text-white font-semibold w-20 h-10 rounded-xl'>
-				Login
-			</button>
+			<div className='flex justify-center items-center'>
+				<button className='bg-green text-white font-semibold w-20 h-10 rounded-xl'>
+					Verify
+				</button>
+			</div>
 		</form>
 	);
 }

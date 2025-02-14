@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import OTPForm from './otpForm';
 
-function LoginForm() {
+function LoginForm({
+	otpPage,
+	setOtpPage,
+}: {
+	otpPage: boolean;
+	setOtpPage: (otpPage: boolean) => void;
+}) {
 	const [user, setUser] = useState({
 		username: '',
 		phone: '',
@@ -36,6 +43,7 @@ function LoginForm() {
 			console.log(response);
 			if (response.status === 200) {
 				setSuccess(true);
+				setOtpPage(true);
 			} else {
 				setError('Failed to send OTP');
 			}
@@ -46,31 +54,41 @@ function LoginForm() {
 		setLoading(false);
 	};
 
+	useEffect(() => {
+		console.log(otpPage);
+	}, [otpPage]);
+
 	return (
-		<form className='flex flex-col gap-3 w-72' onSubmit={handleSubmit}>
-			<input
-				name='username'
-				className='border-2 border-gray-600 rounded-md p-2'
-				type='text'
-				placeholder='Username'
-				required
-				onChange={(e) => setUser({ ...user, username: e.target.value })}
-			/>
-			<input
-				name='phone number'
-				className='border-2 border-gray-600 rounded-md p-2'
-				type='text'
-				placeholder='Phone Number'
-				required
-				onChange={(e) => setUser({ ...user, phone: e.target.value })}
-			/>
-			{error && <p className='text-red-500 m-2'>{error}</p>}
-			<div className='flex justify-center items-center'>
-				<button className='bg-green text-white font-semibold w-20 h-10 rounded-xl'>
-					{loading ? 'Sending OTP...' : 'Send OTP'}
-				</button>
-			</div>
-		</form>
+		<>
+			{otpPage ? (
+				<OTPForm />
+			) : (
+				<form className='flex flex-col gap-3 w-72' onSubmit={handleSubmit}>
+					<input
+						name='username'
+						className='border-2 border-gray-600 rounded-md p-2'
+						type='text'
+						placeholder='Username'
+						required
+						onChange={(e) => setUser({ ...user, username: e.target.value })}
+					/>
+					<input
+						name='phone number'
+						className='border-2 border-gray-600 rounded-md p-2'
+						type='text'
+						placeholder='Phone Number'
+						required
+						onChange={(e) => setUser({ ...user, phone: e.target.value })}
+					/>
+					{error && <p className='text-red-500 m-2'>{error}</p>}
+					<div className='flex justify-center items-center'>
+						<button className='bg-green text-white font-semibold w-20 h-10 rounded-xl'>
+							Send OTP
+						</button>
+					</div>
+				</form>
+			)}
+		</>
 	);
 }
 
