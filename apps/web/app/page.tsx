@@ -1,11 +1,14 @@
-import { Button } from '@repo/ui/button';
+import Image from 'next/image';
 
 export default async function Home() {
 	return (
-		<div className='bg-primary h-screen z-0 p-4'>
-			<main>
-				<Button content='Open alert' />
-			</main>
-		</div>
+		<section className='bg-primary h-full z-0 p-4'>
+			<Image
+				src={'/Group-33704.webp'}
+				alt='banner for latest sales'
+				width={1920}
+				height={1080}
+			/>
+		</section>
 	);
 }

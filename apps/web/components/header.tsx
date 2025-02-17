@@ -3,11 +3,25 @@
 import { LoginButton } from '@/components/validationPage';
 import { useEffect } from 'react';
 import React from 'react';
+import SearchBar from './searchbar';
 
 function Header() {
 	const [isLogInOpen, setIsLogInOpen] = React.useState(false);
 	const [isCartOpen, setIsCartOpen] = React.useState(false);
 	const [activeButton, setActiveButton] = React.useState('');
+	const [location, setLocation] = React.useState<GeolocationPosition | null>(
+		null
+	);
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position) =>
+				setLocation(position)
+			);
+		} else {
+			console.log('Geolocation is not supported by this browser.');
+		}
+	}
 
 	const handleLoginClick = () => {
 		// console.log('Login clicked');
@@ -53,13 +67,22 @@ function Header() {
 					setActiveButton={setActiveButton}
 				/>
 			)}
-			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full'>
 				<header className='bg-primary flex justify-between items-center h-16'>
-					<h1 className='font-bold text-3xl !mx-4'>GoGroceries</h1>
-					<div>
-						<span>Delivery in 8 min.</span>
+					<div className='flex items-center'>
+						<h1 className='font-bold text-3xl text-green mx-2 border-r-4 border-gray-400 pr-3'>
+							<span className='text-amber-300'>Go</span>Groceries
+						</h1>
+						<div className='flex flex-col text-sm'>
+							<span>Delivery in 8 min.</span>
+							<span className='line-clamp-1'>
+								{'QJ9C+Q7V, Kharar, Punjab 140301'}
+							</span>
+						</div>
 					</div>
-					<div>{/* <Search /> */}</div>
+					<div>
+						<SearchBar />
+					</div>
 					<div className='flex gap-3'>
 						<button
 							onClick={handleLoginClick}
