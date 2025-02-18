@@ -1,3 +1,4 @@
+import ItemCard from '@/components/ItemCard';
 import Image from 'next/image';
 
 export default async function Home() {
@@ -9,6 +10,11 @@ export default async function Home() {
 				width={1920}
 				height={1080}
 			/>
+			<section>
+				<div className='flex flex-wrap justify-center'>
+					<ItemCard />
+				</div>
+			</section>
 		</section>
 	);
 }
