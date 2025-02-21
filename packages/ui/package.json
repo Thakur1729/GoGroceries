@@ -2,7 +2,9 @@
   "name": "@repo/ui",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "exports": {
+    "./lucide-react": "./src/exports.utils.ts",
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx"
@@ -22,6 +24,7 @@
     "typescript": "5.5.4"
   },
   "dependencies": {
+    "lucide-react": "^0.475.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }
