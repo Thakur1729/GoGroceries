@@ -27,7 +27,7 @@ const ItemCard = ({
 			<p className='ml-2 font-semibold flex flex-col text-sm'>
 				<span>₹76</span>
 				<span className='text-gray-600'>₹86</span>
-				<div className='border-gray-500 border-b-2 -translate-y-2.5 '></div>
+				<span className='border-gray-500 border-b-2 -translate-y-2.5 '></span>
 			</p>
 			<button className='px-4 py-1 text-green-600 border border-green-600 rounded hover:bg-green-50 text-sm font-medium'>
 				ADD

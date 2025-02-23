@@ -5,30 +5,19 @@ import { useState } from 'react';
 import LoginForm from './loginForm';
 
 interface ModalProps {
-	onClose: () => void;
 	activeButton: string;
 	setActiveButton: (name: string) => void;
 }
 
-export function LoginButton({
-	onClose,
-	activeButton,
-	setActiveButton,
-}: ModalProps) {
+export function LoginButton({ activeButton, setActiveButton }: ModalProps) {
 	const [otpPage, setOtpPage] = useState(false);
-
-	const handleClick = () => {
-		onClose && onClose();
-	};
 
 	// useEffect(() => {
 	// 	console.log(otpPage);
 	// }, [setOtpPage]);
 
 	return (
-		<div
-			onClick={handleClick}
-			className='absolute min-h-[100dvh] overflow-hidden min-w-[100dvw] flex flex-col items-center justify-center z-10 m-2'>
+		<div className='absolute min-h-[100dvh] overflow-hidden min-w-[100dvw] flex flex-col items-center justify-center z-10 m-2'>
 			<div
 				onClick={(e) => e.stopPropagation()}
 				className='bg-white h-96 w-96 flex flex-col justify-center items-center py-10 rounded-md'>
