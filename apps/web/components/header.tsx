@@ -55,7 +55,7 @@ function Header() {
 							setActiveButton={setActiveButton}
 						/>
 					)}
-					// Just try passing close function using context
+					{/* // Just try passing close function using context */}
 					{activeButton === 'cart' && <CartButton onClose={handleClose} />}
 				</Modal>
 			)}

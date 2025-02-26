@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 
 const ItemCard = ({
@@ -16,7 +15,7 @@ const ItemCard = ({
 }) => (
 	<div className='min-w-[200px] p-4 bg-white rounded-lg border border-gray-200 flex flex-col gap-2'>
 		<img
-			src={imageUrl || '/api/placeholder/200/200'}
+			src={imageUrl || 'https://placehold.co/200x200'}
 			alt={title}
 			className='w-full h-40 object-contain mb-2'
 		/>

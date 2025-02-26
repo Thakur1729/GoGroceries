@@ -1,6 +1,7 @@
 import ItemCard from '@/components/ItemCard';
 import Image from 'next/image';
 import ProductSlider from '@/components/ProductSlider';
+import ProductCategoriesBanner from '@/components/banners/ProductCategoriesBanner';
 export default async function Home() {
 	return (
 		<>
@@ -11,6 +12,9 @@ export default async function Home() {
 					width={1280}
 					height={1080}
 				/>
+			</section>
+			<section>
+				<ProductCategoriesBanner />
 			</section>
 			<section>
 				<div className='flex flex-wrap justify-center'>
