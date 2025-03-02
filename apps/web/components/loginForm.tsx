@@ -49,9 +49,9 @@ function LoginForm({
 			}
 		} catch (error) {
 			setError('Failed to send OTP');
+		} finally {
+			setLoading(false);
 		}
-
-		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -61,7 +61,7 @@ function LoginForm({
 	return (
 		<>
 			{otpPage ? (
-				<OTPForm />
+				<OTPForm phoneNumber={user.phone} />
 			) : (
 				<form className='flex flex-col gap-3 w-72' onSubmit={handleSubmit}>
 					<input
@@ -82,8 +82,11 @@ function LoginForm({
 					/>
 					{error && <p className='text-red-500 m-2'>{error}</p>}
 					<div className='flex justify-center items-center'>
-						<button className='bg-green text-white font-semibold w-20 h-10 rounded-xl'>
-							Send OTP
+						<button
+							className={`flex justify-center items-center bg-green text-white font-semibold w-24 h-10 p-3 rounded-xl ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+							type='submit'
+							disabled={loading}>
+							{loading ? 'Sending...' : 'Send OTP'}
 						</button>
 					</div>
 				</form>
