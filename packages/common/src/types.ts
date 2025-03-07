@@ -12,10 +12,6 @@ export const UserPhoneNumberSchema = z.object({
 });
 
 export const UserVerifySchema = z.object({
-	phoneNumber: z
-		.string()
-		.min(10, 'Phone number must contains 10 no.')
-		.max(10, 'Phone number must be 10 digits long'),
 	otp: z
 		.string()
 		.min(4, 'OTP contains 4 number only')
