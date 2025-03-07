@@ -3,6 +3,7 @@ import { prisma } from '@repo/db';
 import { UserPhoneNumberSchema } from '@repo/common/types';
 import { getToken } from '@utils/authOtp';
 import { createMessage } from '@utils/twillio';
+import { createCookie } from '@/app/action';
 
 export async function POST(req: NextRequest) {
 	try {
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
 		const userName = parseInfo.data.name;
 		const totp = getToken(pnumber, 'USER_AUTH');
 
-		const users = await prisma.user.upsert({
+		const d_user = await prisma.user.upsert({
 			where: { phoneNumber: pnumber },
 			create: {
 				name: userName,
@@ -33,18 +34,12 @@ export async function POST(req: NextRequest) {
 		try {
 			await createMessage(`Here is your otp for GoGroceries ${totp}`, pnumber);
 
+			await createCookie(d_user.id, d_user.phoneNumber, 'SIGNUP');
+
 			const response = NextResponse.json(
 				{ message: 'OTP sent successfully' },
 				{ status: 200 }
 			);
-
-			response.cookies.set({
-				name: 'token',
-				value: totp,
-				httpOnly: true,
-				// secure: process.env.NODE_ENV === 'production',
-				// sameSite: 'strict'
-			});
 
 			return response;
 		} catch (error) {
