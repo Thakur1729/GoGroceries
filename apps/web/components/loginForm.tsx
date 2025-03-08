@@ -2,13 +2,17 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import OTPForm from './otpForm';
+import { toast } from 'react-toastify';
 
+//getting otpPage, setOtpPage, onClose from authPage.tsx
 function LoginForm({
 	otpPage,
 	setOtpPage,
+	onClose,
 }: {
 	otpPage: boolean;
 	setOtpPage: (otpPage: boolean) => void;
+	onClose: () => void;
 }) {
 	const [user, setUser] = useState({
 		username: '',
@@ -19,10 +23,6 @@ function LoginForm({
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState(false);
 
-	interface ApiResponse {
-		status: number;
-	}
-
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>
 	): Promise<void> => {
@@ -32,19 +32,26 @@ function LoginForm({
 		setSuccess(false);
 
 		try {
-			const response: ApiResponse = await axios.post(
-				'http://localhost:3000/api/accounts',
-				{
-					name: user.username,
-					phoneNumber: user.phone,
-				}
-			);
+			const response = await axios.post('http://localhost:3000/api/accounts', {
+				name: user.username,
+				phoneNumber: user.phone,
+			});
 
 			console.log(response);
 			if (response.status === 200) {
 				setSuccess(true);
 				setOtpPage(true);
+				toast.success(response.data.message, {
+					closeOnClick: true,
+					position: 'top-center',
+					type: 'success',
+				});
 			} else {
+				toast.error('Try Again Please', {
+					closeOnClick: true,
+					position: 'top-center',
+					type: 'error',
+				});
 				setError('Failed to send OTP');
 			}
 		} catch (error) {
@@ -61,7 +68,7 @@ function LoginForm({
 	return (
 		<>
 			{otpPage ? (
-				<OTPForm phoneNumber={user.phone} />
+				<OTPForm onClose={onClose} />
 			) : (
 				<form className='flex flex-col gap-3 w-72' onSubmit={handleSubmit}>
 					<input

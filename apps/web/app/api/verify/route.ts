@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@utils/authOtp';
 import { UserVerifySchema } from '@repo/common/types';
 import { prisma } from '@repo/db';
-import { createCookie } from '@/app/action';
+import { createVerifyCookie } from '@/app/action';
 import { cookies } from 'next/headers';
 import { verify } from 'jsonwebtoken';
 
@@ -27,8 +27,8 @@ export async function POST(req: NextRequest) {
 			);
 		}
 
-		const token = cookieStore.get('token')?.value;
-		console.log(token);
+		const token = cookieStore.get('token')?.value.split(' ')[1];
+
 		if (!token) {
 			return NextResponse.json({ message: 'Token not found' }, { status: 400 });
 		}
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 		)) as {
 			userid: number;
 			phoneNumber: string;
-			cookieType?: 'SIGNUP' | 'LOGIN' | 'VERIFYED';
+			cookieType?: 'LOGIN' | 'VERIFYED';
 		};
 
 		if (!verifyedtoken) {
@@ -47,7 +47,6 @@ export async function POST(req: NextRequest) {
 		}
 
 		const number = verifyedtoken.phoneNumber;
-		console.log(number);
 		const parsedotp = parsedData.data.otp;
 
 		// add node_env to test otp so we are not making request to twilio unnecessarily
@@ -69,7 +68,7 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({ message: 'User not found' }, { status: 404 });
 		}
 
-		await createCookie(user.id, user.phoneNumber, 'VERIFYED');
+		await createVerifyCookie(user.id, user.phoneNumber, 'VERIFYED');
 		return NextResponse.json({ message: 'User verified' }, { status: 200 });
 	} catch (e: any) {
 		console.error(e);

@@ -1,15 +1,18 @@
 import React from 'react';
 import axios from 'axios';
-// import { cookies } from 'next/headers';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-// import { headers } from 'next/headers';
 
-function OTPForm() {
+interface OTPFormProps {
+	onClose: () => void;
+}
+
+// getting onClose from loginForm.tsx
+function OTPForm({ onClose }: OTPFormProps) {
 	const [loading, setLoading] = React.useState(false);
 	const [error, setError] = React.useState('');
 	const [otp, setOtp] = React.useState('');
-	// const cookieStore = await cookies();
+	// const cookieStore = await cookies(); // can not access cookie in client side
 	const router = useRouter();
 
 	const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,18 +21,9 @@ function OTPForm() {
 		setError('');
 
 		try {
-			const response = await axios.post(
-				'http://localhost:3000/api/verify',
-				{
-					otp,
-				}
-				// {
-				// 	headers: {
-				// 		'Content-Type': 'application/json',
-				// 		Authorization: `Bearer ${cookieStore.get('token')} `,
-				// 	},
-				// }
-			);
+			const response = await axios.post('http://localhost:3000/api/verify', {
+				otp: otp,
+			});
 
 			if (response.status === 200) {
 				toast.success(response.data.message, {
@@ -37,6 +31,7 @@ function OTPForm() {
 					position: 'top-center',
 					type: 'success',
 				});
+				onClose();
 				router.push('/');
 			} else {
 				toast.error(response.data.message, {
