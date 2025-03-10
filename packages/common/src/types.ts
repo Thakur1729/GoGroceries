@@ -15,5 +15,13 @@ export const UserVerifySchema = z.object({
 	otp: z
 		.string()
 		.min(4, 'OTP contains 4 number only')
-		.max(4, 'OTP contains 4 number only'),
+		.max(6, 'OTP contains 4 number only'),
+});
+
+export const CategorySchema = z.object({
+	name: z
+		.string()
+		.min(2, 'Minimum 2 characters required')
+		.max(255, 'Maximum 255 characters allowed'),
+	image: z.string().min(6, 'Minimum 2 characters required'),
 });
