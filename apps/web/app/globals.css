@@ -6,6 +6,11 @@
 
 :root {
 	box-sizing: border-box;
+
+	::selection {
+		background: #0C831F;
+		color: #FFD230;
+	}
 }
 
 *,
