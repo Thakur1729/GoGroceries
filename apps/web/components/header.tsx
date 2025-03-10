@@ -158,7 +158,7 @@ function Header() {
 						)}
 						<button
 							onClick={handleCartClick}
-							className='bg-green text-white font-semibold w-20 h-10 rounded-xl'>
+							className='bg-green text-white font-semibold w-20 h-10 rounded-xl hover:cursor-pointer'>
 							Add Cart
 						</button>
 					</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { X } from '@repo/ui/lucide-react';
 import CartItemCard from './CartItemCard';
+import BillDetails from './BillDetails';
 
 function CartButton({ onClose }: { onClose: () => void }) {
 	return (
@@ -21,15 +22,9 @@ function CartButton({ onClose }: { onClose: () => void }) {
 				<CartItemCard />
 				<CartItemCard />
 				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
-				<CartItemCard />
+			</div>
+			<div>
+				<BillDetails />
 			</div>
 		</div>
 	);
