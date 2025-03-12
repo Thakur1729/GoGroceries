@@ -50,10 +50,6 @@ const Footer = () => {
               <a href="#" className="text-gray-600 hover:text-gray-900">Dry Fruits, Masala & Oil</a>
               <a href="#" className="text-gray-600 hover:text-gray-900">Paan Corner</a>
               <a href="#" className="text-gray-600 hover:text-gray-900">Pharma & Wellness</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Ice Creams & Frozen Desserts</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Beauty & Cosmetics</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Stationery Needs</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">E-Gift Cards</a>
             </div>
             <div className="flex flex-col gap-3">
               <a href="#" className="text-gray-600 hover:text-gray-900">Dairy & Breakfast</a>
@@ -62,9 +58,6 @@ const Footer = () => {
               <a href="#" className="text-gray-600 hover:text-gray-900">Sauces & Spreads</a>
               <a href="#" className="text-gray-600 hover:text-gray-900">Organic & Premium</a>
               <a href="#" className="text-gray-600 hover:text-gray-900">Cleaning Essentials</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Personal Care</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Fashion & Accessories</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Toys & Games</a>
             </div>
             <div className="flex flex-col gap-3">
               <a href="#" className="text-gray-600 hover:text-gray-900">Munchies</a>
@@ -73,9 +66,6 @@ const Footer = () => {
               <a href="#" className="text-gray-600 hover:text-gray-900">Chicken, Meat & Fish</a>
               <a href="#" className="text-gray-600 hover:text-gray-900">Baby Care</a>
               <a href="#" className="text-gray-600 hover:text-gray-900">Home & Office</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Pet Care</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Electronics & Electricals</a>
-              <a href="#" className="text-gray-600 hover:text-gray-900">Print Store</a>
             </div>
           </div>
         </div>
@@ -92,7 +82,7 @@ const Footer = () => {
             Download on the App Store
           </a>
           <a href="#" className="bg-gray-800 text-white px-4 py-2 rounded flex items-center">
-            <img src="/api/placeholder/24/24" alt="Google Play Store" className="mr-2" />
+            <img src="/api/placeholder/24/24" alt="Play Store" className="mr-2" />
             Get it on Google Play
           </a>
         </div>

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 import OTPForm from './otpForm';
-import { toast } from 'react-toastify';
 
 //getting otpPage, setOtpPage, onClose from authPage.tsx
 function LoginForm({
@@ -41,17 +40,17 @@ function LoginForm({
 			if (response.status === 200) {
 				setSuccess(true);
 				setOtpPage(true);
-				toast.success(response.data.message, {
-					closeOnClick: true,
-					position: 'top-center',
-					type: 'success',
-				});
+				// toast.success(response.data.message, {
+				// 	closeOnClick: true,
+				// 	position: 'top-center',
+				// 	type: 'success',
+				// });
 			} else {
-				toast.error('Try Again Please', {
-					closeOnClick: true,
-					position: 'top-center',
-					type: 'error',
-				});
+				// toast.error('Try Again Please', {
+				// 	closeOnClick: true,
+				// 	position: 'top-center',
+				// 	type: 'error',
+				// });
 				setError('Failed to send OTP');
 			}
 		} catch (error) {
