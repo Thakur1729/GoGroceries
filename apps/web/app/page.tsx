@@ -3,6 +3,7 @@ import Image from 'next/image';
 import ProductSlider from '@/components/ProductSlider';
 import ProductCategoriesBanner from '@/components/banners/ProductCategoriesBanner';
 import GroceryCategories from '@/components/banners/GroceryCategories';
+import Footer from '@/components/Footer/footer';
 export default async function Home() {
 	return (
 		<>
@@ -26,6 +27,8 @@ export default async function Home() {
 					<ProductSlider />
 				</div>
 			</section>
+			
+		<Footer />
 		</>
 	);
 }
