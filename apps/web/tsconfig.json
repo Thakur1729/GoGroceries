@@ -1,28 +1,29 @@
 {
-  "extends": "@repo/typescript-config/nextjs.json",
-  "compilerOptions": {
-    "plugins": [
-      {
-        "name": "next"
-      },
-    ],
-    
-    /*to add paths you need to add baseURL */
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./*"],
-      "@utils/*": ["./utils/*"],
-      // "@styles/*": ["styles/*"]
-    }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    "next.config.js",
-    ".next/types/**/*.ts"
-, "postcss.config.mjs"  ],
-  "exclude": [
-    "node_modules"
-  ],
+	"extends": "@repo/typescript-config/nextjs.json",
+	"compilerOptions": {
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+
+		/*to add paths you need to add baseURL */
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./*"],
+			"@utils/*": ["./utils/*"],
+			"@store/*": ["./store/*"],
+			"@components/*": ["./components/*"]
+			// "@styles/*": ["styles/*"]
+		}
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		"next-env.d.ts",
+		"next.config.js",
+		".next/types/**/*.ts",
+		"postcss.config.mjs"
+	],
+	"exclude": ["node_modules"]
 }
