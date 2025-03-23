@@ -17,7 +17,7 @@ model User {
   id          Int       @id @default(autoincrement())
   name        String
   phoneNumber String    @unique // Ensures phone numbers are unique
-  address     Address[] 
+  address     Address[]
   orders      Order[]
   role        UserRole? @default(USER)
   otp         String?
@@ -55,41 +55,54 @@ enum AddressType {
 }
 
 model Category {
-  id Int @id @default(autoincrement())
-  name String @unique
-  image String?
-  products Product[] //one-to-many relationship with products 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  image       String?
+  subcategory SubCategory[] //one-to-many relationship with products 
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model SubCategory {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  image      String
+  products   Product[]
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int
 }
 
 model Product {
-  id              Int       @id @default(autoincrement())
-  prodName       String
+  id              Int             @id @default(autoincrement())
+  prodName        String
   prodDescription String?
-  price           Int  //discounted price
+  discount        Int?            @default(0)
+  price           Float
   mrp             Float
   //Todo:: there might be multiple images for porduct ✅
   image           ProductImages[]
-  stock           Int       @default(0)
+  stock           Int             @default(0)
   unit            String //e.g kg, g, pieces, l or ml etc.
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId Int 
-  CartItem CartItem[]
-  OrderItem OrderItem[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  subcategory     SubCategory     @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  subcategoryId   Int
+  CartItem        CartItem[]
+  OrderItem       OrderItem[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
   //TODO :: Implement favourite table
   // FavouriteItem FavoriteItem[]
 }
 
 // keeping all the images of products here
 model ProductImages {
-  id Int @id @default(autoincrement())
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade) 
+  id        Int      @id @default(autoincrement())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
   //todo:: added image link should be differen currently changing for seeding purpose only. 
-  imageLink String 
+  imageLink String
+  position  Int
+  alt       String?
+  isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -105,32 +118,31 @@ model Cart {
   @@index([userId]) //for better performance
 }
 
-
 model CartItem {
-  id      Int       @id @default(autoincrement())
-  cart    Cart      @relation(fields: [cartId], references: [id])
-  cartId  Int
-  product   Product  @relation(fields: [productId], references: [id])
-  productId Int 
+  id           Int      @id @default(autoincrement())
+  cart         Cart     @relation(fields: [cartId], references: [id])
+  cartId       Int
+  product      Product  @relation(fields: [productId], references: [id])
+  productId    Int
   itemQuantity Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  address   Address     @relation(fields: [addressid], references: [id])
-  addressid Int         @unique
-  user      User        @relation(fields: [userid], references: [id])
-  userid    Int         @unique
-  status    OrderStatus @default(PROCESSING)
-  items     OrderItem[]
-  totalAmount Float
+  id            Int           @id @default(autoincrement())
+  address       Address       @relation(fields: [addressid], references: [id])
+  addressid     Int           @unique
+  user          User          @relation(fields: [userid], references: [id])
+  userid        Int           @unique
+  status        OrderStatus   @default(PROCESSING)
+  items         OrderItem[]
+  totalAmount   Float
   PaymentStatus PaymentStatus @default(PENDING)
   PaymentMethod PaymentMethod
   //todo:: add which delivery partner is delivering goods.
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 enum PaymentMethod {
@@ -139,9 +151,9 @@ enum PaymentMethod {
 }
 
 enum PaymentStatus {
- PENDING
- PROCESSING
- CONFIRM
+  PENDING
+  PROCESSING
+  CONFIRM
 }
 
 enum OrderStatus {
@@ -154,15 +166,14 @@ enum OrderStatus {
   CANCELLED
 }
 
-model OrderItem{
- id Int @id @default(autoincrement())
- order Order @relation(fields: [orderid], references: [id])
- orderid Int @unique
- product Product @relation(fields: [porductId], references: [id])
- porductId Int @unique
- quantity Int
- price Float
- createdAt DateTime @default(now())
- updatedAt DateTime @updatedAt
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  order     Order    @relation(fields: [orderid], references: [id])
+  orderid   Int      @unique
+  product   Product  @relation(fields: [porductId], references: [id])
+  porductId Int      @unique
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
