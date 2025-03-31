@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function CartItemCard() {
-	const [quantity, setQuantity] = React.useState(0);
-
-	function handleQtyDec(e: React.MouseEvent<HTMLButtonElement>) {
-		e.stopPropagation();
-		setQuantity((prevQty) => Math.max(0, prevQty - 1));
-	}
-
-	function handleQtyInc(e: React.MouseEvent<HTMLButtonElement>) {
-		e.stopPropagation();
-		setQuantity((prevQty) => prevQty + 1);
-	}
-
+function CartItemCard({
+	products,
+	removeFromCart,
+	updateQuantity,
+}: {
+	products: any;
+	removeFromCart: any;
+	updateQuantity: any;
+}) {
 	return (
 		<div className='grid grid-cols-12 gap-2 my-2 font-semibold h-auto'>
 			<div className='col-span-3 flex justify-center items-center'>
 				<img
-					src='https://placehold.co/100x100'
-					alt='product'
+					src={
+						products.image[0]?.imageLink || 'https://placehold.co/600x400/png'
+					}
+					alt={products.prodName}
 					className='object-contain w-18 h-12'
 				/>
 			</div>
 			<div className='col-span-5'>
 				<div>
-					<span className='text-sm font-semibold'>Product Name</span>
+					<span className='text-sm font-semibold'>{products.prodName}</span>
 					<br />
 					<span className='text-xs text-gray-600'>148 g</span>
 					<br />
@@ -41,15 +39,17 @@ function CartItemCard() {
 				<div className='flex justify-center items-center bg-green-700 text-white rounded-sm overflow-hidden'>
 					<button
 						className='w-10 h-full py-2 flex justify-center items-center cursor-pointer hover:bg-green-600 transition-colors'
-						onClick={handleQtyDec}
+						// onClick={handleQtyDec}
 						aria-label='Decrease quantity'
-						disabled={quantity === 0}>
+						onClick={() => removeFromCart(products.id)}
+						disabled={products.quantity === 0}>
 						-
 					</button>
-					<span className='px-2'>{quantity}</span>
+					<span className='px-2'>{products.quantity}</span>
 					<button
 						className='w-10 h-full py-2 flex justify-center items-center cursor-pointer hover:bg-green-600 transition-colors'
-						onClick={handleQtyInc}
+						// onClick={handleQtyInc}
+						onClick={() => updateQuantity(products.id, products.quantity + 1)}
 						aria-label='Increase quantity'>
 						+
 					</button>

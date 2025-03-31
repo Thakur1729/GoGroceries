@@ -12,7 +12,6 @@ function page() {
 
 	const allProducts = subCategories.flatMap((category) => category.products);
 
-	//todo: see how to add products whether to fetch individualy or current approach is good.
 	return (
 		<main className='flex min-h-screen'>
 			<SubcategoryNavigation categories={subCategories} />

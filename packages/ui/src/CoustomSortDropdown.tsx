@@ -8,9 +8,10 @@ const CustomSortDropdown = () => {
 
 	const options = [
 		{ value: 'relevance', label: 'Relevance' },
-		{ value: 'price-low-high', label: 'Price: Low to High' },
-		{ value: 'price-high-low', label: 'Price: High to Low' },
-		{ value: 'newest', label: 'Newest First' },
+		{ value: 'price-low-high', label: 'Price (Low to high)' },
+		{ value: 'price-high-low', label: 'Price (High to low)' },
+		{ value: 'discount-high-low', label: 'Discount (High to low)' },
+		{ value: 'name-a-z', label: 'Name (A to Z)' },
 	];
 
 	const toggleDropdown = () => {
@@ -40,19 +41,19 @@ const CustomSortDropdown = () => {
 	}, []);
 
 	return (
-		<div className='flex items-center gap-2'>
-			<span className='text-sm text-gray-500'>Sort By</span>
-			<div className='relative w-full max-w-[180px]' ref={dropdownRef}>
+		<div className='flex items-center gap-3 relative'>
+			<span className='text-sm text-gray-600 font-medium'>Sort By</span>
+			<div className='relative w-64' ref={dropdownRef}>
 				<button
 					type='button'
-					className='flex items-center justify-between w-full px-3 py-2 text-sm border rounded-md bg-white text-left focus:outline-none focus:ring-2 focus:ring-green-500'
+					className='flex items-center justify-between w-full px-4 py-2 text-sm border border-gray-200 rounded-md bg-white text-left focus:outline-none'
 					onClick={toggleDropdown}>
-					<span>
+					<span className='text-green-600 font-medium'>
 						{options.find((option) => option.value === selectedValue)?.label ||
 							'Relevance'}
 					</span>
 					<svg
-						className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+						className={`w-5 h-5 text-green-600 transition-transform ${isOpen ? 'rotate-180' : ''}`}
 						xmlns='http://www.w3.org/2000/svg'
 						viewBox='0 0 20 20'
 						fill='currentColor'>
@@ -65,18 +66,34 @@ const CustomSortDropdown = () => {
 				</button>
 
 				{isOpen && (
-					<div className='absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg'>
-						<ul className='py-1 overflow-auto text-sm max-h-60'>
+					<div className='absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg'>
+						<ul className='py-1'>
 							{options.map((option) => (
 								<li
 									key={option.value}
-									className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${
-										selectedValue === option.value
-											? 'bg-gray-50 text-green-600'
-											: ''
+									className={`flex items-center px-4 py-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-0 ${
+										selectedValue === option.value ? 'bg-green-50' : ''
 									}`}
 									onClick={() => selectOption(option.value)}>
-									{option.label}
+									{selectedValue === option.value ? (
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											className='h-5 w-5 text-green-600 mr-3'
+											viewBox='0 0 20 20'
+											fill='currentColor'>
+											<path
+												fillRule='evenodd'
+												d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+												clipRule='evenodd'
+											/>
+										</svg>
+									) : (
+										<div className='w-5 h-5 mr-5'></div>
+									)}
+									<span
+										className={`${selectedValue === option.value ? 'text-green-600 font-medium pl-3' : ''}`}>
+										{option.label}
+									</span>
 								</li>
 							))}
 						</ul>

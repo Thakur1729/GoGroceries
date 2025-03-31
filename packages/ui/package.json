@@ -5,6 +5,7 @@
   "type": "module",
   "exports": {
     "./lucide-react": "./src/exports.utils.ts",
+    "./sooner": "./src/exports.utils.ts",
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
@@ -27,6 +28,7 @@
   "dependencies": {
     "lucide-react": "^0.475.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sonner": "^2.0.1"
   }
 }

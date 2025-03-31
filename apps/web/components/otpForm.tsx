@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-// import { toast } from 'react-toastify';
+import { toast } from '@repo/ui/sooner';
 
 interface OTPFormProps {
 	onClose: () => void;
@@ -26,19 +26,15 @@ function OTPForm({ onClose }: OTPFormProps) {
 			});
 
 			if (response.status === 200) {
-				// toast.success(response.data.message, {
-				// 	closeOnClick: true,
-				// 	position: 'top-center',
-				// 	type: 'success',
-				// });
+				toast.success(response.data.message, {
+					position: 'top-center',
+				});
 				onClose();
 				router.push('/');
 			} else {
-				// toast.error(response.data.message, {
-				// 	closeOnClick: true,
-				// 	position: 'top-center',
-				// 	type: 'error',
-				// });
+				toast.error('Try again Please', {
+					position: 'top-center',
+				});
 				setError(response.data.message);
 			}
 		} catch (error) {

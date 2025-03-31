@@ -6,7 +6,7 @@ import GroceryCategories from '@/components/banners/GroceryCategories';
 import Footer from '@/components/Footer/footer';
 export default async function Home() {
 	return (
-		<>
+		<div>
 			<section className='flex justify-center items-center bg-primary h-full z-0 p-4'>
 				<Image
 					src={'/Group-33704.webp'}
@@ -24,11 +24,11 @@ export default async function Home() {
 					<div className='container flex justify-start items-center w-full p-4'>
 						<h2 className='font-bold text-3xl'>Dairy Bread and Eggs</h2>
 					</div>
-					<ProductSlider />
+					{/* <ProductSlider /> */}
 				</div>
 			</section>
-			
-		<Footer />
-		</>
+
+			<Footer />
+		</div>
 	);
 }
