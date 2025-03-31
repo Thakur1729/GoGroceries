@@ -62,7 +62,26 @@ export async function GET(req: NextRequest) {
 				categoryId: categoryId,
 			},
 			include: {
-				products: true,
+				products: {
+					select: {
+						id: true,
+						prodName: true,
+						prodDescription: true,
+						discount: true,
+						price: true,
+						mrp: true,
+						stock: true,
+						unit: true,
+						image: {
+							select: {
+								imageLink: true,
+								position: true,
+								alt: true,
+								isPrimary: true,
+							},
+						},
+					},
+				},
 			},
 		});
 
