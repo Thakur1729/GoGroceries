@@ -113,7 +113,7 @@ export const useCartStore = create<CartState>()(
 						totalPrice: state.totalPrice + product.price,
 					}));
 				}
-				console.log(product.id);
+
 				try {
 					await axios.post('http://localhost:3000/api/cart', {
 						productId: product.id,
@@ -129,7 +129,7 @@ export const useCartStore = create<CartState>()(
 				}
 			},
 
-			removeFromCart: (productId) => {
+			removeFromCart: async (productId) => {
 				const currentItems = get().items;
 				const itemToRemove = currentItems.find((item) => item.id === productId);
 
@@ -156,7 +156,7 @@ export const useCartStore = create<CartState>()(
 				}
 
 				try {
-					axios.post('http:localhost:3000/api/cart', {
+					await axios.post('http://localhost:3000/api/cart', {
 						productId,
 						quantity: 1,
 						action: 'remove',
@@ -166,7 +166,7 @@ export const useCartStore = create<CartState>()(
 				}
 			},
 
-			updateQuantity: (productId, quantity) => {
+			updateQuantity: async (productId, quantity) => {
 				const currentItems = get().items;
 				const itemToUpdate = currentItems.find((item) => item.id === productId);
 
@@ -190,12 +190,12 @@ export const useCartStore = create<CartState>()(
 					set((state) => ({
 						items: updateItems,
 						totalItems: state.totalItems + quantityDiff,
-						totalPrice: state.totalItems + priceDiff,
+						totalPrice: state.totalPrice + priceDiff,
 					}));
 				}
 
 				try {
-					axios.post('http:localhost:3000/api/cart', {
+					await axios.post('http://localhost:3000/api/cart', {
 						productId,
 						quantity,
 						action: 'update',
@@ -204,11 +204,11 @@ export const useCartStore = create<CartState>()(
 					console.error('Error syncing cart with server:', err);
 				}
 			},
-			clearCart: () => {
+			clearCart: async () => {
 				set({ items: [], totalItems: 0, totalPrice: 0 });
 
 				try {
-					axios.post(
+					await axios.post(
 						'http://localhost:3000/api/cart',
 						{
 							action: 'clear',

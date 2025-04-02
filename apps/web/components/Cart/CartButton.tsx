@@ -5,8 +5,14 @@ import CartItemCard from './CartItemCard';
 import { useCartStore } from '@/store/categoryStrore';
 
 function CartButton({ onClose }: { onClose: () => void }) {
-	const { items, totalItems, totalPrice, updateQuantity, removeFromCart } =
-		useCartStore();
+	const {
+		items,
+		totalItems,
+		totalPrice,
+		updateQuantity,
+		removeFromCart,
+		clearCart,
+	} = useCartStore();
 
 	if (items.length === 0) {
 		return (
@@ -24,9 +30,14 @@ function CartButton({ onClose }: { onClose: () => void }) {
 			</div>
 		);
 	}
-	console.log(items);
+
+	function handleClearCart(e: React.MouseEvent<HTMLButtonElement>) {
+		e.preventDefault();
+		clearCart();
+	}
+
 	return (
-		<div className='absolute right-0 bg-white w-96 h-dvh overflow-y-scroll'>
+		<div className='absolute right-0 bg-white w-96 h-dvh overflow-y-scroll p-5'>
 			<div className='h-15'>
 				<div className='absolute right-4 top-5'>
 					<X onClick={onClose} />
@@ -36,10 +47,12 @@ function CartButton({ onClose }: { onClose: () => void }) {
 			<div className='bg-gray-50 p-1 overflow-y-auto'>
 				<div className='flex justify-between items-center p-4 bg-blue-200 m-3 rounded-3xl font-semibold h-10'>
 					<p className='text-blue-700 pl-3'>Your total saving</p>
-					<p className='text-blue-700 pr-3'>{totalItems % 25}</p>
+					<p className='text-blue-700 pr-3'>
+						{items.reduce((total, item) => total + (item.mrp - item.price), 0)}
+					</p>
 				</div>
 			</div>
-			<div className='bg-gray-200 m-2 h-auto rounded-sm py-2'>
+			<div className='bg-gray-200 m-2 h-auto rounded-sm p-2'>
 				{items &&
 					items.map((item) => {
 						return (
@@ -57,10 +70,16 @@ function CartButton({ onClose }: { onClose: () => void }) {
 					<span className='font-medium'>Subtotal:</span>
 					<span className='font-semibold'>₹{totalPrice.toFixed(2)}</span>
 				</div>
-
-				<button className='w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium'>
-					Proceed to Checkout
-				</button>
+				<div className='flex-col justify-center items-center w-full'>
+					<button
+						className='w-full py-2 mb-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium'
+						onClick={handleClearCart}>
+						Clear Cart
+					</button>
+					<button className='w-full py-2 mt-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium'>
+						Proceed to Checkout
+					</button>
+				</div>
 			</div>
 		</div>
 	);

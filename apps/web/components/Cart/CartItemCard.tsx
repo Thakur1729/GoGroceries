@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 
 function CartItemCard({
@@ -9,6 +10,15 @@ function CartItemCard({
 	removeFromCart: any;
 	updateQuantity: any;
 }) {
+	const textRef = React.useRef<HTMLSpanElement>(null);
+	const [lineWidth, setLineWidth] = useState(0);
+
+	React.useEffect(() => {
+		if (textRef.current) {
+			setLineWidth(textRef.current.offsetWidth);
+		}
+	}, [products.mrp]);
+
 	return (
 		<div className='grid grid-cols-12 gap-2 my-2 font-semibold h-auto'>
 			<div className='col-span-3 flex justify-center items-center'>
@@ -24,13 +34,20 @@ function CartItemCard({
 				<div>
 					<span className='text-sm font-semibold'>{products.prodName}</span>
 					<br />
-					<span className='text-xs text-gray-600'>148 g</span>
+					<span className='text-xs text-gray-600'>{products.unit}</span>
 					<br />
 					<div className='flex flex-row items-center'>
-						<span className='text-xs'>₹100</span>
+						<span className='text-xs'>{products.price}</span>
 						<div className='flex flex-row items-center justify-center'>
-							<span className='text-xs ml-1 text-gray-600'>₹50</span>
-							<span className='border-gray-900 border-b-2 w-5 -translate-x-5 translate-y-[1px]'></span>
+							<span ref={textRef} className='text-xs ml-1 text-gray-600'>
+								{products.mrp}
+							</span>
+							<span
+								className='border-gray-900 border-b-2 translate-x-0.5'
+								style={{
+									width: `${lineWidth}px`,
+									position: 'absolute',
+								}}></span>
 						</div>
 					</div>
 				</div>
@@ -41,7 +58,11 @@ function CartItemCard({
 						className='w-10 h-full py-2 flex justify-center items-center cursor-pointer hover:bg-green-600 transition-colors'
 						// onClick={handleQtyDec}
 						aria-label='Decrease quantity'
-						onClick={() => removeFromCart(products.id)}
+						onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+							e.stopPropagation();
+							removeFromCart(products.id);
+							return;
+						}}
 						disabled={products.quantity === 0}>
 						-
 					</button>
@@ -49,7 +70,11 @@ function CartItemCard({
 					<button
 						className='w-10 h-full py-2 flex justify-center items-center cursor-pointer hover:bg-green-600 transition-colors'
 						// onClick={handleQtyInc}
-						onClick={() => updateQuantity(products.id, products.quantity + 1)}
+						onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+							e.stopPropagation();
+							updateQuantity(products.id, products.quantity + 1);
+							return;
+						}}
 						aria-label='Increase quantity'>
 						+
 					</button>
